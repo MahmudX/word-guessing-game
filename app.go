@@ -188,7 +188,7 @@ func getWord() (string, string) {
 
 func getMaskedWord(word string) string {
 	if len(word) <= 4 {
-		i := rand.Intn(3)
+		i := rand.Intn(len(word))
 		return replaceAtIndex(word, '_', i)
 	}
 	{
