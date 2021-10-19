@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"os"
 	"os/exec"
-	//"sort"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -38,7 +38,7 @@ func main() {
 		fmt.Print("➡️")
 		fmt.Scanln(&uw)
 
-		if strings.EqualFold(uw, w) {
+		if strings.EqualFold(uw, w) || matchWordPattern(uw, mw) {
 			fmt.Println(successTexts[rand.Intn(len(successTexts))])
 			point++
 		} else {
@@ -211,4 +211,23 @@ func clearConsole() {
 	cmd := exec.Command("cmd", "/c", "cls")
 	cmd.Stdout = os.Stdout
 	cmd.Run()
+}
+
+func matchWordPattern(uw string, mw string) bool {
+	if len(uw) != len(mw) {
+		return false
+	}
+	for i := 0; i < len(mw); i++ {
+		if uw[i] == '_' {
+			return false
+		} else if mw[i] == '_' {
+			continue
+		} else if mw[i] != uw[i] {
+			return false
+		}
+	}
+	if sort.SearchStrings(words, uw) != len(words) {
+		return true
+	}
+	return false
 }
